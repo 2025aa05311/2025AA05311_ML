@@ -10,53 +10,71 @@ Original file is located at
 import streamlit as st
 import pandas as pd
 import joblib
-from sklearn.metrics import confusion_matrix, classification_report, accuracy_score, precision_score, recall_score, f1_score, roc_auc_score, matthews_corrcoef
 import os
+import matplotlib.pyplot as plt
+import seaborn as sns
+from sklearn.metrics import confusion_matrix, classification_report, accuracy_score, f1_score, matthews_corrcoef
 
-st.title("Classification Model Showcase")
+st.set_page_config(page_title="ML Classification Showcase", layout="wide")
+st.title("🍷 Red Wine Quality: Classification Model Showcase")
 
-# a. Dataset Upload (Test data only as per instructions)
-uploaded_file = st.file_uploader("Upload Test CSV", type="csv")
+# a. Dataset Upload (Test data only)
+uploaded_file = st.file_uploader("Upload Test CSV (must contain 'quality' or 'target' column)", type="csv")
 
 if uploaded_file:
+    # Load data
     data = pd.read_csv(uploaded_file)
+    st.write("### Dataset Preview", data.head())
+
+    # Preprocessing: Separate features and target
+    # We drop 'quality' and 'target' to match the 11 features used in training
     X_test_input = data.drop(['quality', 'target'], axis=1, errors='ignore')
-    # If your test CSV has the true labels (for metrics), extract them:
+    
+    # Extract ground truth for evaluation
     if 'target' in data.columns:
         y_test_true = data['target']
     elif 'quality' in data.columns:
         y_test_true = (data['quality'] > 5).astype(int)
     else:
-        st.error("Uploaded file must contain either 'quality' or 'target' for evaluation.")
+        st.error("Error: Uploaded file must contain 'quality' or 'target' for evaluation.")
         st.stop()
-    st.write("Dataset Preview:", data.head())
 
-    # Assume the last column is the target for this demo
-    X_test = data.iloc[:, :-1]
-    y_test = data.iloc[:, -1]
-
-    # b. Model Selection Dropdown
-    model_option = st.selectbox("Select Model",
+    # b. Model Selection
+    st.sidebar.header("Model Settings")
+    model_option = st.sidebar.selectbox("Choose a Model", 
         ["Logistic Regression", "Decision Tree", "kNN", "Naive Bayes", "Random Forest", "XGBoost"])
 
     model_path = f"model/{model_option.replace(' ', '_').lower()}.pkl"
 
     if os.path.exists(model_path):
+        # Load and Predict
         model = joblib.load(model_path)
-        y_pred = model.predict(X_test)
+        y_pred = model.predict(X_test_input)
 
         # c. Display Evaluation Metrics
-        st.subheader(f"Metrics for {model_option}")
-        col1, col2, col3 = st.columns(3)
-        col1.metric("Accuracy", round(accuracy_score(y_test, y_pred), 4))
-        col2.metric("MCC", round(matthews_corrcoef(y_test, y_pred), 4))
-        col3.metric("F1 Score", round(f1_score(y_test, y_pred), 4))
+        st.divider()
+        st.subheader(f"📊 Performance Metrics: {model_option}")
+        
+        m1, m2, m3 = st.columns(3)
+        m1.metric("Accuracy", f"{accuracy_score(y_test_true, y_pred):.4f}")
+        m2.metric("MCC Score", f"{matthews_corrcoef(y_test_true, y_pred):.4f}")
+        m3.metric("F1 Score", f"{f1_score(y_test_true, y_pred):.4f}")
 
         # d. Confusion Matrix & Report
-        st.subheader("Classification Report")
-        st.text(classification_report(y_test, y_pred))
+        col_left, col_right = st.columns(2)
+        
+        with col_left:
+            st.write("#### Classification Report")
+            st.text(classification_report(y_test_true, y_pred))
 
-        st.subheader("Confusion Matrix")
-        st.write(confusion_matrix(y_test, y_pred))
+        with col_right:
+            st.write("#### Confusion Matrix")
+            cm = confusion_matrix(y_test_true, y_pred)
+            fig, ax = plt.subplots(figsize=(5, 4))
+            sns.heatmap(cm, annot=True, fmt='d', cmap='Blues', 
+                        xticklabels=['Bad', 'Good'], yticklabels=['Bad', 'Good'])
+            plt.ylabel('Actual')
+            plt.xlabel('Predicted')
+            st.pyplot(fig) # Use st.pyplot for matplotlib figures
     else:
-        st.error("Model file not found. Please ensure models are trained and saved in the 'model/' directory.")
+        st.error(f"Model file '{model_path}' not found in the repository.")

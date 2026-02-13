@@ -20,6 +20,15 @@ uploaded_file = st.file_uploader("Upload Test CSV", type="csv")
 
 if uploaded_file:
     data = pd.read_csv(uploaded_file)
+    X_test_input = data.drop(['quality', 'target'], axis=1, errors='ignore')
+    # If your test CSV has the true labels (for metrics), extract them:
+    if 'target' in data.columns:
+        y_test_true = data['target']
+    elif 'quality' in data.columns:
+        y_test_true = (data['quality'] > 5).astype(int)
+    else:
+        st.error("Uploaded file must contain either 'quality' or 'target' for evaluation.")
+        st.stop()
     st.write("Dataset Preview:", data.head())
 
     # Assume the last column is the target for this demo

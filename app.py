@@ -41,7 +41,7 @@ if uploaded_file:
     # b. Model Selection
     st.sidebar.header("Model Settings")
     model_option = st.sidebar.selectbox("Choose a Model", 
-        ["Logistic Regression", "Decision Tree", "kNN", "Naive Bayes", "Random Forest", "XGBoost"])
+        ["Logistic Regression", "Decision Tree", "kNN", "Naive Bayes", "Random Forest(Ensemble)", "XGBoost(Ensemble)"])
 
     model_path = f"model/{model_option.replace(' ', '_').lower()}.pkl"
 

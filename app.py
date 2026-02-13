@@ -22,8 +22,7 @@ st.title("🍷 Red Wine Quality: Classification Model Showcase")
 uploaded_file = st.file_uploader("Upload Test CSV (must contain 'quality' or 'target' column)", type="csv")
 
 if uploaded_file:
-    # Load data
-    data = pd.read_csv(uploaded_file)
+    data = pd.read_csv(uploaded_file, sep=None, engine='python')
     st.write("### Dataset Preview", data.head())
 
     # Preprocessing: Separate features and target

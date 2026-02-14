@@ -32,14 +32,6 @@ Target (Quality): Originally a score between 0 and 10, mapped to 0 (Bad: Quality
 # Models Used
 The following comparison table summarizes the performance of all six implemented models across the mandatory evaluation metrics :
 
-ML Model Name	Accuracy	AUC	Precision	Recall	F1	MCC
-Logistic Regression	0.7406	0.8138	0.7927	0.7263	0.758	0.4818
-Decision Tree	0.7281	0.7246	0.7584	0.7542	0.7563	0.4489
-kNN	0.6125	0.6703	0.6571	0.6425	0.6497	0.2163
-Naive Bayes	0.7344	0.7942	0.7611	0.7654	0.7632	0.4608
-Random Forest (Ensemble)	0.7969	0.8956	0.8202	0.8156	0.8179	0.5883
-XGBoost (Ensemble)	0.8125	0.8787	0.8362	0.8268	0.8315	0.6203
-
 <img width="927" height="183" alt="image" src="https://github.com/user-attachments/assets/ca90ec9f-a1e5-4ae7-ae10-f53b5d1e9079" />
 
 
@@ -48,6 +40,7 @@ XGBoost emerged as the top-performing model, achieving the highest Accuracy (81.
 Ensemble methods (Random Forest and XGBoost) significantly outperformed standalone models, benefiting from reduced variance and improved generalization.
 kNN showed the lowest performance, likely due to the high dimensionality of the 11 features without extensive feature scaling.
 
+<img width="1395" height="180" alt="image" src="https://github.com/user-attachments/assets/47d5c963-8e23-43fc-8817-02e5c8943c22" />
 
 
 **Logistic Regression,** "Showed moderate performance with a high Recall (0.86), suggesting it is good at identifying positive cases but has a lower MCC (0.37), indicating a weaker overall correlation than ensemble methods."

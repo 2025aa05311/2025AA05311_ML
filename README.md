@@ -1,23 +1,54 @@
 
 # Problem Statement
-The objective of this project is to develop a robust machine learning system to classify the quality of red wine based on its physicochemical properties. 
-By comparing six different classification algorithms—ranging from linear models like Logistic Regression to complex ensembles like XGBoost—this project identifies the most effective model for quality prediction, which can help winemakers ensure consistency and quality control.
+The objective of this project is to implement and evaluate six different machine learning classification models to predict the quality of red wine based on its physicochemical properties. 
+By comparing traditional classifiers with ensemble methods, we aim to identify the most robust model for distinguishing between "Good" and "Bad" wine quality, providing a data-driven approach to quality control in the winemaking process.
 
 # Dataset Description
 Dataset Name: Wine Quality Dataset (Red Wine)
 Source: UCI Machine Learning Repository
 Problem Type: Binary Classification (predicting if wine is "Good" or "Bad")
 Instance Size: 1,599 samples 
-Feature Size: 11 input features + 1 target variable (12 total columns)
-
+Feature Size: 11 physicochemical input features + 1 target variable (Total 12).
+Target Variable: The original 'quality' score (0-10) was transformed into a binary 
+# classification task:
+1 (Good): Quality score > 5.
+0 (Bad): Quality score < 5.
+# Input Features: 
+Fixed acidity, volatile acidity, citric acid, residual sugar, chlorides, free sulfur dioxide, total sulfur dioxide, density, pH, sulphates, and alcohol.
 # Feature details
-Feature Details:Fixed acidity: Non-volatile acids that do not evaporate readily.Volatile acidity: The amount of acetic acid in wine.Citric acid: Found in small quantities, adds 'freshness' to wine.Residual sugar: Amount of sugar remaining after fermentation stops.Chlorides: The amount of salt in the wine.Free sulfur dioxide: Prevents microbial growth and oxidation of wine.Total sulfur dioxide: Amount of free and bound forms of $SO_2$.Density: The density of water based on the percent alcohol and sugar content.pH: Describes how acidic or basic the wine is (0-14 scale).Sulphates: A wine additive which can contribute to sulfur dioxide levels.Alcohol: The percent alcohol content of the wine.Target (Quality): Originally a score between 0 and 10, mapped to 0 (Bad: Quality $\le$ 5) and 1 (Good: Quality > 5).
+Fixed acidity: Non-volatile acids that do not evaporate readily.
+Volatile acidity: The amount of acetic acid in wine.
+Citric acid: Found in small quantities, adds 'freshness' to wine.
+Residual sugar: Amount of sugar remaining after fermentation stops.
+Chlorides: The amount of salt in the wine.
+Free sulfur dioxide: Prevents microbial growth and oxidation of wine.
+Total sulfur dioxide: Amount of free and bound forms of $SO_2$.
+Density: The density of water based on the percent alcohol and sugar content.
+pH: Describes how acidic or basic the wine is (0-14 scale).
+Sulphates: A wine additive which can contribute to sulfur dioxide levels.
+Alcohol: The percent alcohol content of the wine.
+Target (Quality): Originally a score between 0 and 10, mapped to 0 (Bad: Quality < 5) and 1 (Good: Quality > 5).
+
+# Models Used
+The following comparison table summarizes the performance of all six implemented models across the mandatory evaluation metrics :
+
+ML Model Name	Accuracy	AUC	Precision	Recall	F1	MCC
+Logistic Regression	0.7406	0.8138	0.7927	0.7263	0.758	0.4818
+Decision Tree	0.7281	0.7246	0.7584	0.7542	0.7563	0.4489
+kNN	0.6125	0.6703	0.6571	0.6425	0.6497	0.2163
+Naive Bayes	0.7344	0.7942	0.7611	0.7654	0.7632	0.4608
+Random Forest (Ensemble)	0.7969	0.8956	0.8202	0.8156	0.8179	0.5883
+XGBoost (Ensemble)	0.8125	0.8787	0.8362	0.8268	0.8315	0.6203
+
+<img width="927" height="183" alt="image" src="https://github.com/user-attachments/assets/ca90ec9f-a1e5-4ae7-ae10-f53b5d1e9079" />
 
 
 # Performance Observations
 XGBoost emerged as the top-performing model, achieving the highest Accuracy (81.25%) and MCC (0.6203).
 Ensemble methods (Random Forest and XGBoost) significantly outperformed standalone models, benefiting from reduced variance and improved generalization.
 kNN showed the lowest performance, likely due to the high dimensionality of the 11 features without extensive feature scaling.
+
+
 
 **Logistic Regression,** "Showed moderate performance with a high Recall (0.86), suggesting it is good at identifying positive cases but has a lower MCC (0.37), indicating a weaker overall correlation than ensemble methods."
 

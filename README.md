@@ -40,7 +40,11 @@ XGBoost emerged as the top-performing model, achieving the highest Accuracy (81.
 Ensemble methods (Random Forest and XGBoost) significantly outperformed standalone models, benefiting from reduced variance and improved generalization.
 kNN showed the lowest performance, likely due to the high dimensionality of the 11 features without extensive feature scaling.
 
-<img width="1395" height="180" alt="image" src="https://github.com/user-attachments/assets/47d5c963-8e23-43fc-8817-02e5c8943c22" />
+
+
+<img width="1395" height="230" alt="image" src="https://github.com/user-attachments/assets/47d5c963-8e23-43fc-8817-02e5c8943c22" />
+
+
 
 
 **Logistic Regression,** "Showed moderate performance with a high Recall (0.86), suggesting it is good at identifying positive cases but has a lower MCC (0.37), indicating a weaker overall correlation than ensemble methods."
